@@ -2,6 +2,7 @@ package org.example;
 
 import com.pi4j.Pi4J;
 import com.pi4j.context.Context;
+import com.pi4j.io.gpio.digital.DigitalOutput;
 
 
 public class App {
@@ -14,108 +15,102 @@ public class App {
     private static final int PIN_F = 23;
     private static final int PIN_G = 18;
 
+    DigitalOutput A, B, C, D, E, F, G;
+
+    private void clear() {
+        A.low();
+        B.low();
+        C.low();
+        D.low();
+        E.low();
+        F.low();
+        G.low();
+    }
+
     public static void main(String[] args) throws InterruptedException {
         Context pi4j = Pi4J.newAutoContext();
+        App app = new App();
 
-        var A = pi4j.digitalOutput().create(PIN_A);
-        var B = pi4j.digitalOutput().create(PIN_B);
-        var C = pi4j.digitalOutput().create(PIN_C);
-        var D = pi4j.digitalOutput().create(PIN_D);
-        var E = pi4j.digitalOutput().create(PIN_E);
-        var F = pi4j.digitalOutput().create(PIN_F);
-        var G = pi4j.digitalOutput().create(PIN_G);
+        app.A = pi4j.digitalOutput().create(PIN_A);
+        app.B = pi4j.digitalOutput().create(PIN_B);
+        app.C = pi4j.digitalOutput().create(PIN_C);
+        app.D = pi4j.digitalOutput().create(PIN_D);
+        app.E = pi4j.digitalOutput().create(PIN_E);
+        app.F = pi4j.digitalOutput().create(PIN_F);
+        app.G = pi4j.digitalOutput().create(PIN_G);
 
         //0
-        G.high();
+        app.G.high();
         Thread.sleep(500);
-        G.low();
+        app.clear();
 
         //1
-        A.high();
-        D.high();
-        E.high();
-        F.high();
-        G.high();
+        app.A.high();
+        app.D.high();
+        app.E.high();
+        app.F.high();
+        app.G.high();
         Thread.sleep(500);
-        A.low();
-        D.low();
-        E.low();
-        F.low();
-        G.low();
+        app.clear();
 
         //2
-        C.high();
-        F.high();
+        app.C.high();
+        app.F.high();
         Thread.sleep(500);
-        C.low();
-        F.low();
+        app.clear();
 
         //3
-        F.high();
-        E.high();
+        app.F.high();
+        app.E.high();
         Thread.sleep(500);
-        F.low();
-        E.low();
+        app.clear();
 
         //4
-        A.high();
-        D.high();
-        E.high();
+        app.A.high();
+        app.D.high();
+        app.E.high();
         Thread.sleep(500);
-        A.low();
-        D.low();
-        E.low();
+        app.clear();
 
         //5
-        E.high();
-        B.high();
+        app.E.high();
+        app.B.high();
         Thread.sleep(500);
-        E.low();
-        B.low();
+        app.clear();
 
         //6
-        B.high();
+        app.B.high();
         Thread.sleep(500);
-        B.low();
+        app.clear();
 
         //7
-        F.high();
-        E.high();
-        D.high();
-        G.high();
+        app.F.high();
+        app.E.high();
+        app.D.high();
+        app.G.high();
         Thread.sleep(500);
-        F.low();
-        E.low();
-        D.low();
-        G.low();
+        app.clear();
 
         //8
         Thread.sleep(500);
 
         //9
-        E.high();
-        D.high();
+        app.E.high();
+        app.D.high();
         Thread.sleep(500);
-        E.low();
-        D.low();
+        app.clear();
 
-        A.high();
-        B.high();
-        C.high();
-        D.high();
-        E.high();
-        F.high();
-        G.high();
+        app.A.high();
+        app.B.high();
+        app.C.high();
+        app.D.high();
+        app.E.high();
+        app.F.high();
+        app.G.high();
 
         Thread.sleep(1000);
 
-        A.low();
-        B.low();
-        C.low();
-        D.low();
-        E.low();
-        F.low();
-        G.low();
+        app.clear();
 
         pi4j.shutdown();
     }
