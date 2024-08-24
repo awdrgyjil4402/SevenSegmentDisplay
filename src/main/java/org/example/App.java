@@ -16,6 +16,7 @@ public class App {
     private static final int PIN_G = 18;
 
     DigitalOutput A, B, C, D, E, F, G;
+    Context pi4j;
 
     private void clear() {
         A.low();
@@ -27,10 +28,7 @@ public class App {
         G.low();
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        Context pi4j = Pi4J.newAutoContext();
-        App app = new App();
-
+    private void init(App app) {
         app.A = pi4j.digitalOutput().create(PIN_A);
         app.B = pi4j.digitalOutput().create(PIN_B);
         app.C = pi4j.digitalOutput().create(PIN_C);
@@ -38,6 +36,17 @@ public class App {
         app.E = pi4j.digitalOutput().create(PIN_E);
         app.F = pi4j.digitalOutput().create(PIN_F);
         app.G = pi4j.digitalOutput().create(PIN_G);
+    }
+
+    private void end() {
+        pi4j.shutdown();
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        App app = new App();
+        app.pi4j = Pi4J.newAutoContext();
+
+        app.init(app);
 
         //0
         app.G.high();
@@ -112,6 +121,6 @@ public class App {
 
         app.clear();
 
-        pi4j.shutdown();
+        app.end();
     }
 }
