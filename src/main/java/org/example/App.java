@@ -16,7 +16,7 @@ public class App {
     private static final int PIN_G = 18;
 
     DigitalOutput A, B, C, D, E, F, G;
-    Context pi4j;
+    private Context pi4j;
 
     private void clear() {
         A.low();
@@ -29,6 +29,7 @@ public class App {
     }
 
     private void init(App app) {
+        pi4j = Pi4J.newAutoContext();
         app.A = pi4j.digitalOutput().create(PIN_A);
         app.B = pi4j.digitalOutput().create(PIN_B);
         app.C = pi4j.digitalOutput().create(PIN_C);
@@ -38,88 +39,93 @@ public class App {
         app.G = pi4j.digitalOutput().create(PIN_G);
     }
 
-    private void end() {
+    private void end() throws InterruptedException {
+        A.high();
+        B.high();
+        C.high();
+        D.high();
+        E.high();
+        F.high();
+        G.high();
+
+        Thread.sleep(1000);
+
+        clear();
+
         pi4j.shutdown();
     }
 
     public static void main(String[] args) throws InterruptedException {
         App app = new App();
-        app.pi4j = Pi4J.newAutoContext();
 
         app.init(app);
 
-        //0
-        app.G.high();
-        Thread.sleep(500);
-        app.clear();
-
-        //1
-        app.A.high();
-        app.D.high();
-        app.E.high();
-        app.F.high();
-        app.G.high();
-        Thread.sleep(500);
-        app.clear();
-
-        //2
-        app.C.high();
-        app.F.high();
-        Thread.sleep(500);
-        app.clear();
-
-        //3
-        app.F.high();
-        app.E.high();
-        Thread.sleep(500);
-        app.clear();
-
-        //4
-        app.A.high();
-        app.D.high();
-        app.E.high();
-        Thread.sleep(500);
-        app.clear();
-
-        //5
-        app.E.high();
-        app.B.high();
-        Thread.sleep(500);
-        app.clear();
-
-        //6
-        app.B.high();
-        Thread.sleep(500);
-        app.clear();
-
-        //7
-        app.F.high();
-        app.E.high();
-        app.D.high();
-        app.G.high();
-        Thread.sleep(500);
-        app.clear();
-
-        //8
-        Thread.sleep(500);
-
-        //9
-        app.E.high();
-        app.D.high();
-        Thread.sleep(500);
-        app.clear();
-
-        app.A.high();
-        app.B.high();
-        app.C.high();
-        app.D.high();
-        app.E.high();
-        app.F.high();
-        app.G.high();
-
-        Thread.sleep(1000);
-
-        app.clear();
+        for (int i = 0; i <= 10; i++) {
+            switch (i) {
+                case 0:
+                    app.G.high();
+                    Thread.sleep(500);
+                    app.clear();
+                    break;
+                case 1:
+                    app.A.high();
+                    app.D.high();
+                    app.E.high();
+                    app.F.high();
+                    app.G.high();
+                    Thread.sleep(500);
+                    app.clear();
+                    break;
+                case 2:
+                    app.C.high();
+                    app.F.high();
+                    Thread.sleep(500);
+                    app.clear();
+                    break;
+                case 3:
+                    app.F.high();
+                    app.E.high();
+                    Thread.sleep(500);
+                    app.clear();
+                    break;
+                case 4:
+                    app.A.high();
+                    app.D.high();
+                    app.E.high();
+                    Thread.sleep(500);
+                    app.clear();
+                    break;
+                case 5:
+                    app.E.high();
+                    app.B.high();
+                    Thread.sleep(500);
+                    app.clear();
+                    break;
+                case 6:
+                    app.B.high();
+                    Thread.sleep(500);
+                    app.clear();
+                    break;
+                case 7:
+                    app.F.high();
+                    app.E.high();
+                    app.D.high();
+                    app.G.high();
+                    Thread.sleep(500);
+                    app.clear();
+                    break;
+                case 8:
+                    Thread.sleep(500);
+                    break;
+                case 9:
+                    app.E.high();
+                    app.D.high();
+                    Thread.sleep(500);
+                    app.clear();
+                    break;
+                case 10:
+            }
+        }
 
         app.end();
     }
